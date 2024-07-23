@@ -1,10 +1,10 @@
 mock_simple_data = [
-  {'passage_context': {'linked_str': 'wallet'}, 
-   'hyperlink': "https://www.cnn.com/cnn-underscored/fashion/the-best-mens-wallets"
-   },
-  # {'passage_context': {'linked_str': 'Boeing'},
-  #  'hyperlink': 'https://www.cnbc.com/quotes/BA'
+  # {'passage_context': {'linked_str': 'wallet'}, 
+  #  'hyperlink': "https://www.cnn.com/cnn-underscored/fashion/the-best-mens-wallets"
   #  },
+  {'passage_context': {'linked_str': 'Boeing'},
+   'hyperlink': 'https://www.cnbc.com/quotes/BA'
+   },
   #   {'passage_context': {'linked_str': 'money-losing and delayed modification'},
   #  'hyperlink': 'https://www.cnbc.com/2022/04/27/boeing-lost-billion-dollars-on-trump-air-force-one-plane-deal.html'
   #  },

@@ -1,7 +1,7 @@
 from nltk import word_tokenize, pos_tag
 
-def find_nouns(s: str):
-  print("find_nouns(): ", s)
+def pos_phrase(s: str):
+  print("pos_phrase(): %s", s)
   tags = pos_tag(word_tokenize(s))
   print("tags: " + str(tags))
   
