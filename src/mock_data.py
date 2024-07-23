@@ -1,12 +1,20 @@
 mock_simple_data = [
-  {'context': 'Alteryx', 
-   'hyperlink_text': "Alteryx, Inc. is an American computer software company based in Irvine, California, with a development center in Broomfield, Colorado,and offices worldwide. The company's products are used for data science and analytics. The software is designed to make advanced analytics automation accessible to any data worker."
+  {'passage_context': {'linked_str': 'wallet'}, 
+   'hyperlink': "https://www.cnn.com/cnn-underscored/fashion/the-best-mens-wallets"
    },
-  {'context': "CNN Business",
-   'hyperlink_text': "CNN Business (formerly CNN Money) is a financial news and information website, operated by CNN. The website was originally formed as a joint venture between CNN.com and Time Warner's Fortune and Money magazines. Since the spin-off of Time Warner's publishing assets as Time Inc. (and their subsequent sale to Meredith Corporation and later, to IAC's Dotdash), the site has since operated as an affiliate of CNN."
-   },
-  {'context': "The Trump Organization",
-   'hyperlink_text': "The Trump Organization is an American privately-owned conglomerate owned by Donald Trump. It serves as the holding company for all of Trump's business ventures and investments, with around 250 of its affiliates and subsidiaries using the Trump name.[5][6][7] Donald Trump joined the organization in 1968, began leading it in 1971, renamed it around 1973, and handed off its leadership to his children in 2017 after he won the 2016 United States presidential election."}
+  # {'passage_context': {'linked_str': 'Boeing'},
+  #  'hyperlink': 'https://www.cnbc.com/quotes/BA'
+  #  },
+  #   {'passage_context': {'linked_str': 'money-losing and delayed modification'},
+  #  'hyperlink': 'https://www.cnbc.com/2022/04/27/boeing-lost-billion-dollars-on-trump-air-force-one-plane-deal.html'
+  #  },
+  #   {'passage_context': {'linked_str': 'Joe Biden’s'},
+  #  'hyperlink': 'https://www.cnbc.com/joe-biden/'
+  #  },
+  #   {'passage_context': {'linked_str': 'he would end his teetering re-election campaign'},
+  #  'hyperlink': 'https://www.cnbc.com/'
+  #  },
+    
   ]
 
 mock_complex_data = [
