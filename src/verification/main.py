@@ -76,7 +76,7 @@ class HyperlinkVerifier:
         while number_try < retry_limit:
             try:
                 r = requests.head(url, allow_redirects=True, timeout=4)
-                logger.info('status %s', r.status_code)
+                logger.info('status %i', r.status_code)
 
                 # go into granular categorization if error code
                 if r.status_code >= 400:
