@@ -30,7 +30,6 @@ async def verifyLinks(items: list[LinkItem]):
     results = []
     for item in items:
         validation_code = verifier.read_url(item.hyperlink)
-        print(validation_code)
         if (validation_code > 2):
             results.append({'validation_code': validation_code})
         else:
