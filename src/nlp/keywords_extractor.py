@@ -3,7 +3,7 @@ from transformers import pipeline
 
 curr_dir = Path(__file__).parent
 token_classification = pipeline(
-    "token-classification", model=curr_dir / '../models/keyphrase-extraction-kbir-inspec')
+    "token-classification", model=curr_dir / '../../models/keyphrase-extraction-kbir-inspec')
 
 
 def keywords_extractor(str):
