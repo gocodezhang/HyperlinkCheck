@@ -2,32 +2,32 @@ mock_simple_data = [
     {'passage_context': {'linked_str': 'wallet'},
      'hyperlink': "https://www.cnn.com/cnn-underscored/fashion/the-best-mens-wallets"
      },
-    {'passage_context': {'linked_str': 'Boeing'},
-     'hyperlink': 'https://www.cnbc.com/quotes/BA'
-     },
-    {'passage_context': {'linked_str': 'money-losing and delayed modification'},
-     'hyperlink': 'https://www.cnbc.com/2022/04/27/boeing-lost-billion-dollars-on-trump-air-force-one-plane-deal.html'
-     },
-    {'passage_context': {'linked_str': 'Joe Biden’s'},
-     'hyperlink': 'https://www.cnbc.com/joe-biden/'
-     },
-    {'passage_context': {'linked_str': 'Biscuit Basin', 'sentence': 'The Biscuit Basin area of Yellowstone National Park in Wyoming is closed following a hydrothermal explosion Tuesday morning, park officials said in a news release and post on X.'},
-     'hyperlink': 'https://yellowstonenationalpark.com/biscuitbasin.htm'
-     },
-    {'passage_context': {'linked_str': 'Alphabet',
-                         'sentence': 'Google parent company Alphabet reported second-quarter results after the bell Tuesday that were in-line with analyst estimates on revenue and earnings, but missed on YouTube advertising revenue.'
-                         },
-     'hyperlink': 'https://www.cnbc.com/quotes/GOOG/'
-     },
-    {'passage_context': {'linked_str': 'largest video platform in the world', 'sentence': 'Though it’s the largest video platform in the world, it faces increased competition from social video sites like TikTok.'},
-     'hyperlink': 'https://www.cnbc.com/2024/06/26/youtube-streaming-dominance-media-strategy.html'
-     },
-    {'passage_context': {'linked_str': 'opened', 'sentence': 'During the second quarter, Alphabet saw a number of expansion updates, including for Waymo, which opened its service to all San Francisco users.'},
-     'hyperlink': 'https://www.cnbc.com/2024/06/25/waymo-opens-robotaxi-service-to-all-san-francisco-users.html'
-     },
-    {'passage_context': {'linked_str': 'he would end his teetering re-election campaign'},
-     'hyperlink': 'https://www.cnbc.com/'
-     },
+    # {'passage_context': {'linked_str': 'Boeing'},
+    #  'hyperlink': 'https://www.cnbc.com/quotes/BA'
+    #  },
+    # {'passage_context': {'linked_str': 'money-losing and delayed modification'},
+    #  'hyperlink': 'https://www.cnbc.com/2022/04/27/boeing-lost-billion-dollars-on-trump-air-force-one-plane-deal.html'
+    #  },
+    # {'passage_context': {'linked_str': 'Joe Biden’s'},
+    #  'hyperlink': 'https://www.cnbc.com/joe-biden/'
+    #  },
+    # {'passage_context': {'linked_str': 'Biscuit Basin', 'sentence': 'The Biscuit Basin area of Yellowstone National Park in Wyoming is closed following a hydrothermal explosion Tuesday morning, park officials said in a news release and post on X.'},
+    #  'hyperlink': 'https://yellowstonenationalpark.com/biscuitbasin.htm'
+    #  },
+    # {'passage_context': {'linked_str': 'Alphabet',
+    #                      'sentence': 'Google parent company Alphabet reported second-quarter results after the bell Tuesday that were in-line with analyst estimates on revenue and earnings, but missed on YouTube advertising revenue.'
+    #                      },
+    #  'hyperlink': 'https://www.cnbc.com/quotes/GOOG/'
+    #  },
+    # {'passage_context': {'linked_str': 'largest video platform in the world', 'sentence': 'Though it’s the largest video platform in the world, it faces increased competition from social video sites like TikTok.'},
+    #  'hyperlink': 'https://www.cnbc.com/2024/06/26/youtube-streaming-dominance-media-strategy.html'
+    #  },
+    # {'passage_context': {'linked_str': 'opened', 'sentence': 'During the second quarter, Alphabet saw a number of expansion updates, including for Waymo, which opened its service to all San Francisco users.'},
+    #  'hyperlink': 'https://www.cnbc.com/2024/06/25/waymo-opens-robotaxi-service-to-all-san-francisco-users.html'
+    #  },
+    # {'passage_context': {'linked_str': 'he would end his teetering re-election campaign'},
+    #  'hyperlink': 'https://www.cnbc.com/'
+    #  },
 ]
 
 mock_broken_url = [

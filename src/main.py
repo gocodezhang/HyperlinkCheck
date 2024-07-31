@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from verification import HyperlinkVerifier
 from typing import Union
+from pathlib import Path
+import nltk
 
 
 class PassageContext(BaseModel):
@@ -16,6 +18,10 @@ class LinkItem(BaseModel):
     passage_context: PassageContext
 
 
+curr_dir = Path(__file__).parent
+nltk_data_path = curr_dir / '../models/nltk_data'
+if (nltk_data_path not in nltk.data.path):
+    nltk.data.path.append(nltk_data_path)
 verifier = HyperlinkVerifier()
 app = FastAPI()
 
