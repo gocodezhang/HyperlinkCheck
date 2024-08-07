@@ -2,9 +2,9 @@ from bs4 import BeautifulSoup, Tag, ResultSet
 from readability import Document
 from selenium.common.exceptions import WebDriverException
 
-from nlp import classifier, keywords_extractor, pos_phrase
-from verification.website_driver import create_driver
-from verification.parse_helper import filter_title, filter_description
+from src.nlp import classifier, keywords_extractor, pos_phrase
+from src.verification.website_driver import create_driver
+from src.verification.parse_helper import filter_title, filter_description
 
 import requests
 import time

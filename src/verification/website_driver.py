@@ -4,6 +4,10 @@ import time
 
 def create_driver():
     options = webdriver.ChromeOptions()
+    service = webdriver.ChromeService(executable_path='/opt/chromedriver')
+
+    options.binary_location = '/opt/chrome/chrome'
+
     options.page_load_strategy = 'eager'
     options.add_experimental_option("detach", True)
 
@@ -16,7 +20,7 @@ def create_driver():
     options.add_argument('--enable-automation')
     options.add_argument('--disable-notifications')
 
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(options=options, service=service)
     driver.set_page_load_timeout(6)
 
     return driver

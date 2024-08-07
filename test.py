@@ -1,11 +1,11 @@
 
 from mock_data import mock_simple_data, mock_complex_data, mock_broken_url
-from verification import HyperlinkVerifier
+from src.verification import HyperlinkVerifier
 from pathlib import Path
 import nltk
 
 curr_dir = Path(__file__).parent
-nltk_data_path = curr_dir / '../models/nltk_data'
+nltk_data_path = curr_dir / './models/nltk_data'
 if (nltk_data_path not in nltk.data.path):
     nltk.data.path.append(nltk_data_path)
 
