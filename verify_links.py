@@ -33,7 +33,10 @@ def handler(event: APIGateWayEvent, context):
     links_to_verify = []  # event['body']
     print('testing')
     logger.info('handler(): %s', links_to_verify)
+    disp = Display(visible=False)
+    disp.start()
     verifier = HyperlinkVerifier()
+    disp.stop()
     # results = []
     # try:
     #     for item in links_to_verify:

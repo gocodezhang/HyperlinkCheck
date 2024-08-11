@@ -13,10 +13,10 @@ def create_driver():
 
     options.page_load_strategy = 'eager'
 
-    options.add_argument("--headless=new")
+    # options.add_argument("--headless=new")
     options.add_argument('--no-sandbox')
     options.add_argument("--disable-gpu")
-    options.add_argument("--window-size=1280x1696")
+    options.add_argument("--start-maximized")
     # options.add_argument("--window-size=800x600")
     # options.add_argument('--disable-default-apps')
     # options.add_argument('--disable-extensions')
