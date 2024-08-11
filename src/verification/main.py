@@ -18,6 +18,7 @@ class HyperlinkVerifier:
 
     # ------------ constructor ------------------ #
     def __init__(self):
+        logger.info('__init__()')
         self.webdriver = create_driver()
         self.curr_soup: (BeautifulSoup | None) = None
         self.curr_doc: (Document | None) = None

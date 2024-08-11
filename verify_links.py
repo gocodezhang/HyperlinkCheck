@@ -1,6 +1,7 @@
 from typing import TypedDict, Optional
 from src.verification import HyperlinkVerifier
 from pathlib import Path
+from pyvirtualdisplay import Display
 import logging
 import nltk
 
@@ -8,9 +9,8 @@ curr_dir = Path(__file__).parent
 nltk_data_path = curr_dir / './models/nltk_data'
 if (nltk_data_path not in nltk.data.path):
     nltk.data.path.append(nltk_data_path)
-verifier = HyperlinkVerifier()
 logger = logging.getLogger('handler')
-logging.basicConfig(level=logging.INFO)
+logger.setLevel('INFO')
 
 
 class PassageContext(TypedDict):
@@ -30,24 +30,27 @@ class APIGateWayEvent(TypedDict):
 
 
 def handler(event: APIGateWayEvent, context):
-    links_to_verify = event['body']
+    links_to_verify = []  # event['body']
+    print('testing')
     logger.info('handler(): %s', links_to_verify)
-    results = []
-    try:
-        for item in links_to_verify:
-            validation_code = verifier.read_url(item['hyperlink'])
-            if (validation_code > 2):
-                results.append({'validation_code': validation_code})
-            else:
-                result = verifier.validate(item['passage_context'])
-                result['validation_code'] = validation_code
-                results.append(result)
-        return {
-            "statusCode": 200,
-            "headers": {
-                "Content-Type": "application/json"
-            },
-            "body": results
-        }
-    except Exception as e:
-        logger.error(e)
+    verifier = HyperlinkVerifier()
+    # results = []
+    # try:
+    #     for item in links_to_verify:
+    #         validation_code = verifier.read_url(item['hyperlink'])
+    #         if (validation_code > 2):
+    #             results.append({'validation_code': validation_code})
+    #         else:
+    #             result = verifier.validate(item['passage_context'])
+    #             result['validation_code'] = validation_code
+    #             results.append(result)
+    #     return {
+    #         "statusCode": 200,
+    #         "headers": {
+    #             "Content-Type": "application/json"
+    #         },
+    #         "body": results
+    #     }
+    # except Exception as e:
+    #     logger.error(e)
+    return 'Hello'
