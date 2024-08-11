@@ -30,30 +30,34 @@ class APIGateWayEvent(TypedDict):
 
 
 def handler(event: APIGateWayEvent, context):
+    print(event)
     links_to_verify = []  # event['body']
-    print('testing')
     logger.info('handler(): %s', links_to_verify)
-    disp = Display(visible=False)
-    disp.start()
-    verifier = HyperlinkVerifier()
-    disp.stop()
     # results = []
-    # try:
-    #     for item in links_to_verify:
-    #         validation_code = verifier.read_url(item['hyperlink'])
-    #         if (validation_code > 2):
-    #             results.append({'validation_code': validation_code})
-    #         else:
-    #             result = verifier.validate(item['passage_context'])
-    #             result['validation_code'] = validation_code
-    #             results.append(result)
-    #     return {
-    #         "statusCode": 200,
-    #         "headers": {
-    #             "Content-Type": "application/json"
-    #         },
-    #         "body": results
-    #     }
-    # except Exception as e:
-    #     logger.error(e)
-    return 'Hello'
+    try:
+        results = []
+        disp = Display(visible=False)
+        disp.start()
+        verifier = HyperlinkVerifier()
+
+        for item in links_to_verify:
+            validation_code = verifier.read_url(item['hyperlink'])
+            if (validation_code > 2):
+                results.append({'validation_code': validation_code})
+            else:
+                result = verifier.validate(item['passage_context'])
+                result['validation_code'] = validation_code
+                results.append(result)
+
+        verifier.webdriver.quit()
+        disp.stop()
+
+        return {
+            "statusCode": 200,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": results
+        }
+    except Exception as e:
+        logger.error(e)

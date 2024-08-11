@@ -11,7 +11,7 @@ import time
 import logging
 
 logger = logging.getLogger('HyperlinkVerifier')
-logging.basicConfig(level=logging.INFO)
+logger.setLevel('INFO')
 
 
 class HyperlinkVerifier:
@@ -25,7 +25,10 @@ class HyperlinkVerifier:
         self.curr_url = {}
         return
 
-    # ------------ read ------------------ #
+    # ------------ browser config ------------------ #
+
+    # ------------ read url ------------------ #
+
     def read_url(self, url: str):
         logger.info('read_url() %s', url)
 
@@ -99,7 +102,7 @@ class HyperlinkVerifier:
 
         return 4 if connection_error_count >= timeout_error_count else 5
 
-    # ------------ validate url with passage ------------------ #
+    # ------------ validation ------------------ #
 
     def validate(self, passage_context: dict[str, str]):
         logger.info('validate() %s', passage_context)

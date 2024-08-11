@@ -1,7 +1,6 @@
 import subprocess
 from selenium import webdriver
 from tempfile import mkdtemp
-import time
 
 
 def create_driver():
