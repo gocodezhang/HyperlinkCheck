@@ -30,9 +30,7 @@ class APIGateWayEvent(TypedDict):
 
 
 def handler(event: APIGateWayEvent, context):
-    print(event)
-    links_to_verify = []  # event['body']
-    logger.info('handler(): %s', links_to_verify)
+    logger.info('handler(): %s', event)
     # results = []
     try:
         results = []
@@ -40,7 +38,7 @@ def handler(event: APIGateWayEvent, context):
         disp.start()
         verifier = HyperlinkVerifier()
 
-        for item in links_to_verify:
+        for item in event['body']:
             validation_code = verifier.read_url(item['hyperlink'])
             if (validation_code > 2):
                 results.append({'validation_code': validation_code})
