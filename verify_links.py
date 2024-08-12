@@ -59,3 +59,4 @@ def handler(event: APIGateWayEvent, context):
         }
     except Exception as e:
         logger.error(e)
+        raise e
