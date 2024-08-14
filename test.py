@@ -1,9 +1,12 @@
 
 from mock_data import mock_simple_data, mock_complex_data, mock_broken_url
 from src.verification import HyperlinkVerifier
+from src.nlp import classifier
 from pathlib import Path
+from dotenv import load_dotenv
 import nltk
 
+load_dotenv()
 curr_dir = Path(__file__).parent
 nltk_data_path = curr_dir / './models/nltk_data'
 if (nltk_data_path not in nltk.data.path):
@@ -17,9 +20,5 @@ for data in mock_simple_data:
     result = verifier.validate(data['passage_context'])
     print(result)
 
-# for data in mock_broken_url:
-#     validation_code = verifier.read_url(data['hyperlink'])
-#     if (validation_code > 2):
-#         raise Exception('invalid url')
-#     result = verifier.validate(data['passage_context'])
-#     print(result)
+# print(classifier("Hi, I recently bought a device from your company but it is not working as advertised and I would like to get reimbursed!", [
+#       "refund", "legal", "faq"]))

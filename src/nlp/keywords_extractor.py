@@ -1,12 +1,27 @@
 from pathlib import Path
 from transformers import pipeline
+import requests
+import os
 
+env = os.environ.get('ENV')
 curr_dir = Path(__file__).parent
+
+KEY_WORD_API_URL = "https://api-inference.huggingface.co/models/ml6team/keyphrase-extraction-kbir-inspec"
+
+
+def token_classification_infer_api(str: str):
+    headers = {"Authorization": "Bearer " + os.environ.get('HF_API_KEY')}
+    data = {"inputs": str, "parameters": {
+        "aggregation_strategy": "none"}, "options": {"wait_for_model": True}}
+    response = requests.post(KEY_WORD_API_URL, headers=headers, json=data)
+    return response.json()
+
+
 token_classification = pipeline(
-    "token-classification", model=curr_dir / '../../models/keyphrase-extraction-kbir-inspec')
+    "token-classification", model=curr_dir / '../../models/keyphrase-extraction-kbir-inspec') if env == "Production" else token_classification_infer_api
 
 
-def keywords_extractor(str):
+def keywords_extractor(str: str):
     # apply token classification to identify key words
     raw_output = token_classification(str)
     length = len(raw_output)
