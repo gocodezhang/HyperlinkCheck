@@ -3,7 +3,7 @@ from transformers import pipeline
 import os
 import requests
 
-env = os.environ.get('ENV')
+env = os.environ.get('ENV_VAR')
 curr_dir = Path(__file__).parent
 API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-mnli"
 

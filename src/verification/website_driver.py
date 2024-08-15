@@ -5,7 +5,7 @@ from tempfile import mkdtemp
 
 
 def create_driver():
-    env = os.environ.get('ENV')
+    env = os.environ.get('ENV_VAR', 'localhost')
 
     options = webdriver.ChromeOptions()
     service = webdriver.ChromeService() if env == 'localhost' else webdriver.ChromeService(executable_path='/opt/chromedriver', service_args=[

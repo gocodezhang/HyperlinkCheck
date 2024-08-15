@@ -3,7 +3,7 @@ from transformers import pipeline
 import requests
 import os
 
-env = os.environ.get('ENV')
+env = os.environ.get('ENV_VAR')
 curr_dir = Path(__file__).parent
 
 KEY_WORD_API_URL = "https://api-inference.huggingface.co/models/ml6team/keyphrase-extraction-kbir-inspec"

@@ -2,3 +2,6 @@ main.py
 mock_data.py
 test.py
 **/__pycache__
+
+models/bart-large-mnli/
+models/keyphrase-extraction-kbir-inspec/

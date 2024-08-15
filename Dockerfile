@@ -22,6 +22,7 @@ COPY requirements.txt ${LAMBDA_TASK_ROOT}
 # install dependencies
 RUN pip install -r requirements.txt
 
+ENV ENV_VAR=development
 # copy code src
 COPY ./src ${LAMBDA_TASK_ROOT}/src
 
