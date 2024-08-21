@@ -9,7 +9,7 @@ def create_driver():
 
     options = webdriver.ChromeOptions()
     service = webdriver.ChromeService() if env == 'localhost' else webdriver.ChromeService(executable_path='/opt/chromedriver', service_args=[
-        '--log-level=INFO'], log_output=subprocess.STDOUT)
+        '--log-level=WARNING'], log_output=subprocess.STDOUT)
 
     options.page_load_strategy = 'eager'
 

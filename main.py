@@ -1,9 +1,12 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from verification import HyperlinkVerifier
 from typing import Union
 from pathlib import Path
+from pyvirtualdisplay import Display
+from src.verification import HyperlinkVerifier
+import logging
 import nltk
+import os
 
 
 class PassageContext(BaseModel):
@@ -18,11 +21,26 @@ class LinkItem(BaseModel):
     passage_context: PassageContext
 
 
+# ----------------- Set up -------------------------- #
+env = os.environ.get('ENV_VAR', 'localhost')
+
+# set up path for nltk
 curr_dir = Path(__file__).parent
-nltk_data_path = curr_dir / '../models/nltk_data'
+nltk_data_path = curr_dir / './models/nltk_data'
 if (nltk_data_path not in nltk.data.path):
     nltk.data.path.append(nltk_data_path)
+
+# set up virtual display and browser
+if (env != 'localhost'):
+    disp = Display(visible=False)
+    disp.start()
+
 verifier = HyperlinkVerifier()
+
+# set logging level
+logging.basicConfig(level=logging.INFO)
+
+# --------------- Initialize API ---------------------- #
 app = FastAPI()
 
 

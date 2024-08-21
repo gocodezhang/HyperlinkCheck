@@ -11,7 +11,6 @@ import time
 import logging
 
 logger = logging.getLogger('HyperlinkVerifier')
-logger.setLevel('INFO')
 
 
 class HyperlinkVerifier:
@@ -70,7 +69,7 @@ class HyperlinkVerifier:
         4 = url doesn't exist in DNS - connection error
         5 = server not responding - time out
         """
-        logger.info('check_url() %s', url)
+        logger.info('_check_url() %s', url)
 
         retry_limit = 2
         number_try = 0
@@ -134,12 +133,12 @@ class HyperlinkVerifier:
 
     # interal validate methods
     def _validate_context_controller(self, context: str, input: str):
-        logger.info('validate_context_controller() %s', context)
+        logger.info('_validate_context_controller() %s', context)
 
         keywords = pos_phrase(
             input) if context == 'linked_str' else keywords_extractor(input)['words']
         num_keywords = len(keywords)
-        logger.info('validate_context_controller() %s', keywords)
+        logger.info('_pos_phrase() %s', keywords)
         scores_set: list[list[float]] = []
         # title validation
         if (context == 'linked_str'):
@@ -178,6 +177,7 @@ class HyperlinkVerifier:
         return {'keywords': keywords, 'scores': best_set}
 
     def _validate_evaluator(self, scores: list[float]):
+        logger.info('_validate_evaluator() %s', scores)
         sum = 0
         for score in scores:
             if (score == 1):

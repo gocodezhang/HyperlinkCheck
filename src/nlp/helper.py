@@ -3,7 +3,6 @@ from nltk import word_tokenize, pos_tag
 
 def pos_phrase(s: str):
     tags = pos_tag(word_tokenize(s))
-    print("tags: " + str(tags))
 
     # add noun or verb if only one tag
     if (len(tags) == 1):
