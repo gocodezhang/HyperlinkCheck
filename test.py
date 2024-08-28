@@ -5,7 +5,9 @@ from src.nlp import classifier
 from pathlib import Path
 from dotenv import load_dotenv
 import nltk
+import logging
 
+logging.basicConfig(level=logging.INFO)
 load_dotenv()
 curr_dir = Path(__file__).parent
 nltk_data_path = curr_dir / './models/nltk_data'
@@ -15,7 +17,8 @@ if (nltk_data_path not in nltk.data.path):
 verifier = HyperlinkVerifier()
 for data in mock_simple_data:
     validation_code = verifier.read_url(data['hyperlink'])
-    if (validation_code > 2):
+    print(validation_code)
+    if (validation_code > 0):
         raise Exception('invalid url')
     result = verifier.validate(data['passage_context'])
     print(result)

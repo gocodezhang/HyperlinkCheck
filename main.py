@@ -57,7 +57,7 @@ async def verifyLinks(items: list[LinkItem]):
         results = []
         for item in items:
             validation_code = verifier.read_url(item.hyperlink)
-            if (validation_code > 2):
+            if (validation_code > 0):
                 results.append({'validation_code': validation_code})
             else:
                 result = verifier.validate(item.passage_context.model_dump())
@@ -67,4 +67,3 @@ async def verifyLinks(items: list[LinkItem]):
     except Exception as e:
         logger.error(e)
         raise e
-

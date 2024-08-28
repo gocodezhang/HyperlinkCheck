@@ -51,11 +51,28 @@ class HyperlinkVerifier:
                 # parse html into string
                 soup = BeautifulSoup(html, "lxml")
                 self.curr_soup = soup
-                return 0
+                if (self._soup_examine()):
+                    return 0
+                else:
+                    return check_code
             except WebDriverException as e:
                 number_try += 1
 
         return check_code
+
+    def _soup_examine(self):
+        """
+        Validate if the soup from current page
+        """
+        title = self._get_title()
+        summary = self._get_summary()
+        body = self._get_cleaned_body()
+
+        if (('captcha' in summary) and body == ''):
+            # encounter recaptcha bot page - return 0
+            return False
+
+        return True
 
     def _check_url(self, url: str):
         """
@@ -187,6 +204,8 @@ class HyperlinkVerifier:
         logger.info('_get_title()')
 
         if (self.curr_url.get('title')):
+            logger.info('_get_title(): returning %s',
+                        self.curr_url.get('title'))
             return self.curr_url.get('title')
 
         soup = self.curr_soup
@@ -219,6 +238,11 @@ class HyperlinkVerifier:
     def _get_summary(self):
         logger.info('_get_summary()')
 
+        if (self.curr_url.get('summary')):
+            logger.info('_get_summary(): returning %s',
+                        self.curr_url.get('summary'))
+            return self.curr_url.get('summary')
+
         soup = self.curr_soup
         head = soup.find('head')
         tag_description = head.find(filter_description)
@@ -231,6 +255,12 @@ class HyperlinkVerifier:
 
     def _get_cleaned_body(self):
         logger.info('_get_cleaned_body()')
+
+        if (self.curr_url.get('body')):
+            logger.info('_get_cleaned_body(): returning %s',
+                        self.curr_url.get('body'))
+            return self.curr_url.get('body')
+
         read_doc_content = self.curr_doc.summary(html_partial=True)
         body = ''
         # find content
