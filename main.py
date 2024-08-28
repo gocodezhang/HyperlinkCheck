@@ -39,6 +39,7 @@ verifier = HyperlinkVerifier()
 
 # set logging level
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger('FastAPI')
 
 # --------------- Initialize API ---------------------- #
 app = FastAPI()
@@ -51,13 +52,19 @@ async def root():
 
 @app.post('/verify')
 async def verifyLinks(items: list[LinkItem]):
-    results = []
-    for item in items:
-        validation_code = verifier.read_url(item.hyperlink)
-        if (validation_code > 2):
-            results.append({'validation_code': validation_code})
-        else:
-            result = verifier.validate(item.passage_context.model_dump())
-            result['validation_code'] = validation_code
-            results.append(result)
-    return results
+    logger.info('verifyLinks() %s', items)
+    try:
+        results = []
+        for item in items:
+            validation_code = verifier.read_url(item.hyperlink)
+            if (validation_code > 2):
+                results.append({'validation_code': validation_code})
+            else:
+                result = verifier.validate(item.passage_context.model_dump())
+                result['validation_code'] = validation_code
+                results.append(result)
+        return results
+    except Exception as e:
+        logger.error(e)
+        raise e
+

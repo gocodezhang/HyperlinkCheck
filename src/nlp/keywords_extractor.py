@@ -2,7 +2,9 @@ from pathlib import Path
 from transformers import pipeline
 import requests
 import os
+import logging
 
+logger = logging.getLogger('extractor')
 env = os.environ.get('ENV_VAR')
 curr_dir = Path(__file__).parent
 
@@ -22,8 +24,10 @@ token_classification = pipeline(
 
 
 def keywords_extractor(str: str):
+    logger.info('keywords_extractor(): %s', str)
     # apply token classification to identify key words
     raw_output = token_classification(str)
+    logger.info('token_classification(): returning %s', raw_output)
     length = len(raw_output)
 
     # convert the model output into actual key words

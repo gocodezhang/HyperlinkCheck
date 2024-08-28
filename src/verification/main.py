@@ -7,7 +7,6 @@ from src.verification.website_driver import create_driver
 from src.verification.parse_helper import filter_title, filter_description
 
 import requests
-import time
 import logging
 
 logger = logging.getLogger('HyperlinkVerifier')
@@ -45,9 +44,8 @@ class HyperlinkVerifier:
         while number_try < retry_limit:
             try:
                 # open url
-                start = time.time()
                 self.webdriver.get(url)
-                logger.info('reading time: %f', time.time() - start)
+                logger.info(self.webdriver.current_url)
                 # read the source page
                 html = self.webdriver.page_source
                 # parse html into string
@@ -113,6 +111,8 @@ class HyperlinkVerifier:
         validate_result_list: list[dict[str, list]] = []
         # perform validation for each context
         for k, v in passage_context.items():
+            if (v is None):
+                continue
             curr_validate_context_result = self._validate_context_controller(
                 k, v)
             if (self._validate_evaluator(curr_validate_context_result['scores'])):
@@ -138,12 +138,10 @@ class HyperlinkVerifier:
         keywords = pos_phrase(
             input) if context == 'linked_str' else keywords_extractor(input)['words']
         num_keywords = len(keywords)
-        logger.info('_pos_phrase() %s', keywords)
         scores_set: list[list[float]] = []
         # title validation
         if (context == 'linked_str'):
             titles = self._get_title()
-            logger.info('titles %s', titles)
             scores_title = [0] * num_keywords
             # check if titles contain these keywords
             for i, keyword in enumerate(keywords):
@@ -156,14 +154,12 @@ class HyperlinkVerifier:
 
         # summary validation
         summary = self._get_summary()
-        logger.info('summary %s', summary)
         if summary:
             classification_summary = classifier(summary, keywords)
             scores_set.append(classification_summary['scores'])
 
         # body validation
         body = self._get_cleaned_body()
-        logger.info('body %s', body)
         if body:
             classification_body = classifier(body, keywords)
             scores_set.append(classification_body['scores'])
@@ -188,6 +184,7 @@ class HyperlinkVerifier:
 
     # ----------- internal parsing methods -------------- #
     def _get_title(self):
+        logger.info('_get_title()')
 
         if (self.curr_url.get('title')):
             return self.curr_url.get('title')
@@ -215,18 +212,25 @@ class HyperlinkVerifier:
 
         self.curr_url['title'] = possible_titles
 
+        logger.info('_get_title(): returning %s', possible_titles)
+
         return self.curr_url['title']
 
     def _get_summary(self):
+        logger.info('_get_summary()')
+
         soup = self.curr_soup
         head = soup.find('head')
         tag_description = head.find(filter_description)
 
         self.curr_url['summary'] = tag_description['content']
 
+        logger.info('_get_summary(): returning %s', self.curr_url['summary'])
+
         return self.curr_url['summary']
 
     def _get_cleaned_body(self):
+        logger.info('_get_cleaned_body()')
         read_doc_content = self.curr_doc.summary(html_partial=True)
         body = ''
         # find content
@@ -244,5 +248,6 @@ class HyperlinkVerifier:
                     body += ' ' + string
 
         self.curr_url['body'] = body
+        logger.info('_get_cleaned_body(): returning %s', body)
 
         return self.curr_url['body']

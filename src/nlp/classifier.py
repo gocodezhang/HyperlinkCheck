@@ -2,7 +2,9 @@ from pathlib import Path
 from transformers import pipeline
 import os
 import requests
+import logging
 
+logger = logging.getLogger('classifier')
 env = os.environ.get('ENV_VAR')
 curr_dir = Path(__file__).parent
 API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-mnli"
@@ -21,4 +23,7 @@ zero_shot_classification = pipeline(
 
 
 def classifier(str: str, labels: list[str]):
-    return zero_shot_classification(str, labels, multi_label=True)
+    logger.info('classifier(): %s', {"str": str, "labels": labels})
+    result = zero_shot_classification(str, labels, multi_label=True)
+
+    return result

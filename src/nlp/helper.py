@@ -1,7 +1,11 @@
 from nltk import word_tokenize, pos_tag
+import logging
+
+logger = logging.getLogger('nltk')
 
 
 def pos_phrase(s: str):
+    logging.info('pos_phrase(): %s', s)
     tags = pos_tag(word_tokenize(s))
 
     # add noun or verb if only one tag
