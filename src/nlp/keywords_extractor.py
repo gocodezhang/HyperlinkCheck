@@ -27,7 +27,7 @@ def keywords_extractor(str: str):
     logger.info('keywords_extractor(): %s', str)
     # apply token classification to identify key words
     raw_output = token_classification(str)
-    logger.info('token_classification(): returning %s', raw_output)
+    logger.info('keywords_extractor() raw_output: %s', raw_output)
     length = len(raw_output)
 
     # convert the model output into actual key words
@@ -44,11 +44,13 @@ def keywords_extractor(str: str):
         # locate start/end for curr keyword
         start = curr_output['start']
         end = curr_output['end']
+        total_word_length = (end - start)
         score = curr_output['score'] * (end - start)
         # move until we find the next B-KEY
         while (index + 1 < length and raw_output[index + 1]['entity'] != 'B-KEY'):
             next_output = raw_output[index + 1]
             end = next_output['end']
+            total_word_length += end - next_output['start']
             score += next_output['score'] * (end - next_output['start'])
             index += 1
 
@@ -56,7 +58,7 @@ def keywords_extractor(str: str):
         if (word not in visited):
             visited.add(word)
             tags['words'].append(word)
-            tags['scores'].append(score / (end - start))
+            tags['scores'].append(score / total_word_length)
 
         index += 1
 

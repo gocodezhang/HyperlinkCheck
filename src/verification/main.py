@@ -11,6 +11,8 @@ import logging
 
 logger = logging.getLogger('HyperlinkVerifier')
 
+foo = 'foo'
+
 
 class HyperlinkVerifier:
 
@@ -67,6 +69,8 @@ class HyperlinkVerifier:
         title = self._get_title()
         summary = self._get_summary()
         body = self._get_cleaned_body()
+
+        logger.info('_soup_examine()')
 
         if (('captcha' in summary) and body == ''):
             # encounter recaptcha bot page - return 0
@@ -128,13 +132,14 @@ class HyperlinkVerifier:
         validate_result_list: list[dict[str, list]] = []
         # perform validation for each context
         for k, v in passage_context.items():
-            if (v is None):
+            if (not v):
                 continue
             curr_validate_context_result = self._validate_context_controller(
                 k, v)
             if (self._validate_evaluator(curr_validate_context_result['scores'])):
                 return curr_validate_context_result
-            validate_result_list.append(curr_validate_context_result)
+            if (len(curr_validate_context_result.get('scores')) > 0):
+                validate_result_list.append(curr_validate_context_result)
 
         # find the best result among all contexts
         best_index = 0
@@ -152,32 +157,37 @@ class HyperlinkVerifier:
     def _validate_context_controller(self, context: str, input: str):
         logger.info('_validate_context_controller() %s', context)
 
-        keywords = pos_phrase(
+        keywords: list[str] = pos_phrase(
             input) if context == 'linked_str' else keywords_extractor(input)['words']
         num_keywords = len(keywords)
+
+        if (num_keywords == 0):
+            return {'keywords': [], 'scores': []}
+
         scores_set: list[list[float]] = []
         # title validation
         if (context == 'linked_str'):
             titles = self._get_title()
+            logger.info('_validate_context_controller() titles: %s', titles)
             scores_title = [0] * num_keywords
             # check if titles contain these keywords
             for i, keyword in enumerate(keywords):
+                keyword_lowercase = keyword.lower()
                 for title in titles:
-                    if (keyword in title):
+                    if (keyword_lowercase in title):
                         scores_title[i] = 1
-                        break
             # push title scores into scores_set
             scores_set.append(scores_title)
 
         # summary validation
         summary = self._get_summary()
-        if summary:
+        if (summary and summary != foo):
             classification_summary = classifier(summary, keywords)
             scores_set.append(classification_summary['scores'])
 
         # body validation
         body = self._get_cleaned_body()
-        if body:
+        if (body and body != foo):
             classification_body = classifier(body, keywords)
             scores_set.append(classification_body['scores'])
 
@@ -191,6 +201,8 @@ class HyperlinkVerifier:
 
     def _validate_evaluator(self, scores: list[float]):
         logger.info('_validate_evaluator() %s', scores)
+        if (len(scores) == 0):
+            return False
         sum = 0
         for score in scores:
             if (score == 1):
@@ -204,8 +216,6 @@ class HyperlinkVerifier:
         logger.info('_get_title()')
 
         if (self.curr_url.get('title')):
-            logger.info('_get_title(): returning %s',
-                        self.curr_url.get('title'))
             return self.curr_url.get('title')
 
         soup = self.curr_soup
@@ -216,22 +226,20 @@ class HyperlinkVerifier:
         read_title = self.curr_doc.title()
 
         if (read_title):
-            possible_titles.append(read_title)
+            possible_titles.append(read_title.lower())
 
         # find all possible titles in head
         head: Tag = soup.find('head')
         soup_titles: ResultSet[Tag] = head.find_all(filter_title)
 
-        # push string in titles into possible_titles
+        # push lowercased string in titles into possible_titles
         for title in soup_titles:
             if (title.name == 'title'):
-                possible_titles.append(title.string)
+                possible_titles.append(title.string.lower())
             else:
-                possible_titles.append(title['content'])
+                possible_titles.append(title['content'].lower())
 
         self.curr_url['title'] = possible_titles
-
-        logger.info('_get_title(): returning %s', possible_titles)
 
         return self.curr_url['title']
 
@@ -239,17 +247,13 @@ class HyperlinkVerifier:
         logger.info('_get_summary()')
 
         if (self.curr_url.get('summary')):
-            logger.info('_get_summary(): returning %s',
-                        self.curr_url.get('summary'))
             return self.curr_url.get('summary')
 
         soup = self.curr_soup
         head = soup.find('head')
         tag_description = head.find(filter_description)
 
-        self.curr_url['summary'] = tag_description['content']
-
-        logger.info('_get_summary(): returning %s', self.curr_url['summary'])
+        self.curr_url['summary'] = foo if tag_description is None else tag_description['content']
 
         return self.curr_url['summary']
 
@@ -257,8 +261,6 @@ class HyperlinkVerifier:
         logger.info('_get_cleaned_body()')
 
         if (self.curr_url.get('body')):
-            logger.info('_get_cleaned_body(): returning %s',
-                        self.curr_url.get('body'))
             return self.curr_url.get('body')
 
         read_doc_content = self.curr_doc.summary(html_partial=True)
@@ -277,7 +279,6 @@ class HyperlinkVerifier:
                 else:
                     body += ' ' + string
 
-        self.curr_url['body'] = body
-        logger.info('_get_cleaned_body(): returning %s', body)
+        self.curr_url['body'] = foo if body == '' else body
 
         return self.curr_url['body']

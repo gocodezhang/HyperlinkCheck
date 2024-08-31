@@ -5,7 +5,7 @@ logger = logging.getLogger('nltk')
 
 
 def pos_phrase(s: str):
-    logging.info('pos_phrase(): %s', s)
+    logger.info('pos_phrase(): %s', s)
     tags = pos_tag(word_tokenize(s))
 
     # add noun or verb if only one tag
@@ -25,5 +25,7 @@ def pos_phrase(s: str):
             prev_is_noun = True
         else:
             prev_is_noun = False
+
+    logger.info('pos_phrase() nouns: %s', nouns)
 
     return nouns

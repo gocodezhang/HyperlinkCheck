@@ -26,4 +26,15 @@ def classifier(str: str, labels: list[str]):
     logger.info('classifier(): %s', {"str": str, "labels": labels})
     result = zero_shot_classification(str, labels, multi_label=True)
 
+    # enforce scores to be in the same order as labels input
+    length = len(labels)
+    scores_ordered = [0] * length
+    for i in range(length):
+        index = result['labels'].index(labels[i])
+        scores_ordered[i] = result['scores'][index]
+
+    result['labels'] = labels
+    result['scores'] = scores_ordered
+    logger.info('classifier() result: %s', result)
+
     return result
