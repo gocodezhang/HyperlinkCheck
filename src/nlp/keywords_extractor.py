@@ -12,6 +12,7 @@ KEY_WORD_API_URL = "https://api-inference.huggingface.co/models/ml6team/keyphras
 
 
 def token_classification_infer_api(str: str):
+    logger.info('token_classification_infer_api()')
     headers = {"Authorization": "Bearer " + os.environ.get('HF_API_KEY')}
     data = {"inputs": str, "parameters": {
         "aggregation_strategy": "none"}, "options": {"wait_for_model": True}}

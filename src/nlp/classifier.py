@@ -11,6 +11,7 @@ API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-mnli"
 
 
 def classifier_infer_api(str: str, labels: list[str], **kwargs):
+    logger.info('classifier_infer_api()')
     headers = {"Authorization": "Bearer " + os.environ.get('HF_API_KEY')}
     data = {"inputs": str, "parameters": {
         "candidate_labels": labels, "multi_label": kwargs.get('multi_label'), "options": {"wait_for_model": True}}}
