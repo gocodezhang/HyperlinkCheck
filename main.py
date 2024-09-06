@@ -61,7 +61,6 @@ async def verifyLinks(items: list[LinkItem]):
                 results.append({'validation_code': validation_code})
             else:
                 result = verifier.validate(item.passage_context.model_dump())
-                result['validation_code'] = validation_code
                 results.append(result)
         return results
     except Exception as e:
