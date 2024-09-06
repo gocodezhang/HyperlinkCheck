@@ -5,7 +5,7 @@ import os
 import logging
 
 logger = logging.getLogger('extractor')
-env = os.environ.get('ENV_VAR')
+env = os.environ.get('ENV_VAR', 'localhost')
 curr_dir = Path(__file__).parent
 
 KEY_WORD_API_URL = "https://api-inference.huggingface.co/models/ml6team/keyphrase-extraction-kbir-inspec"
@@ -20,7 +20,7 @@ def token_classification_infer_api(str: str):
 
 
 token_classification = pipeline(
-    "token-classification", model=curr_dir / '../../models/keyphrase-extraction-kbir-inspec') if env == "Production" else token_classification_infer_api
+    "token-classification", model=curr_dir / '../../models/keyphrase-extraction-kbir-inspec') if env == "localhost" else token_classification_infer_api
 
 
 def keywords_extractor(str: str):

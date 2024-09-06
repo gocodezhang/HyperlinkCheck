@@ -5,7 +5,7 @@ import requests
 import logging
 
 logger = logging.getLogger('classifier')
-env = os.environ.get('ENV_VAR')
+env = os.environ.get('ENV_VAR', 'localhost')
 curr_dir = Path(__file__).parent
 API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-mnli"
 
@@ -19,7 +19,7 @@ def classifier_infer_api(str: str, labels: list[str], **kwargs):
 
 
 zero_shot_classification = pipeline(
-    "zero-shot-classification", model=curr_dir / '../../models/bart-large-mnli') if env == "Production" else classifier_infer_api
+    "zero-shot-classification", model=curr_dir / '../../models/bart-large-mnli') if env == "localhost" else classifier_infer_api
 
 
 def classifier(str: str, labels: list[str]):
