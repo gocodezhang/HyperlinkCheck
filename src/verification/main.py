@@ -5,7 +5,7 @@ from selenium.common.exceptions import WebDriverException
 from src.nlp import classifier, keywords_extractor, pos_phrase
 from src.verification.website_driver import create_driver
 from src.verification.parse_helper import filter_title, filter_description
-from src.verification.types import UrlContext, ValidationResult
+from src.verification.types import UrlContext, ValidationResult, PassageContext
 
 import requests
 import logging
@@ -129,9 +129,8 @@ class HyperlinkVerifier:
 
     # ------------ validation ------------------ #
 
-    def validate(self, passage_context: dict[str, str]):
+    def validate(self, passage_context: PassageContext):
         logger.info('validate() %s', passage_context)
-
         # check if curr_soup is ready
         if (self.curr_soup is None):
             raise Exception('soup is not cooked')
@@ -264,7 +263,7 @@ class HyperlinkVerifier:
 
         return self.curr_url['title']
 
-    def _get_summary(self):
+    def _get_summary(self) -> str:
         logger.info('_get_summary()')
 
         if (self.curr_url.get('summary')):
@@ -276,7 +275,7 @@ class HyperlinkVerifier:
             self.curr_url['summary'] = foo
             return self.curr_url['summary']
 
-        tag_description = head.find(filter_description)
+        tag_description: (Tag | None) = head.find(filter_description)
 
         self.curr_url['summary'] = foo if tag_description is None else tag_description['content']
 
