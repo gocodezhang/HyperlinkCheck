@@ -28,7 +28,7 @@ def keywords_extractor(str: str):
     logger.info('keywords_extractor(): %s', str)
     # apply token classification to identify key words
     raw_output = token_classification(str)
-    logger.info('keywords_extractor() raw_output: %s', raw_output)
+    logger.info('keywords_extractor() llm_output: %s', raw_output)
     length = len(raw_output)
 
     # convert the model output into actual key words
