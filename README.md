@@ -73,3 +73,7 @@ The API Service contains below three major components
 Gaoyuan Zhang
 * [![github]](https://github.com/gocodezhang)
 * [![gmail]](mailto:zgy25483387@gmail.com)
+
+
+[github]: https://img.shields.io/badge/GitHub-181717.svg?style=for-the-badge&logo=GitHub&logoColor=white
+[gmail]: https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white
