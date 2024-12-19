@@ -68,3 +68,8 @@ The API Service contains below three major components
 
 ![API Architecture Diagram](./asset/hyperlink_arch.png)
 
+## Contact
+
+Gaoyuan Zhang
+* [![github]](https://github.com/gocodezhang)
+* [![gmail]](mailto:zgy25483387@gmail.com)
